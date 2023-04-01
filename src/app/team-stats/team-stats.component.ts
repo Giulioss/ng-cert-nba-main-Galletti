@@ -10,17 +10,26 @@ import {Game, Stats, Team} from '../data.models';
 })
 export class TeamStatsComponent implements OnInit {
 
-  @Input()
-  team!: Team;
+  @Input() team!: Team;
 
   games$!: Observable<Game[]>;
   stats!: Stats;
+  showRemoveModal = false;
   constructor(protected nbaService: NbaService) { }
 
   ngOnInit(): void {
     this.games$ = this.nbaService.getLastResults(this.team, 12).pipe(
       tap(games =>  this.stats = this.nbaService.getStatsFromGames(games, this.team))
     )
+  }
+
+  closeModal() {
+    this.showRemoveModal = false;
+  }
+
+  confirmTeamRemoval(team: Team) {
+    this.showRemoveModal = false;
+    this.nbaService.removeTrackedTeam(team);
   }
 
 }
