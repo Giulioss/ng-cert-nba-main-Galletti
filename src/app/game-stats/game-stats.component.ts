@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {Team} from '../data.models';
-import {Observable, tap} from 'rxjs';
 import {NbaService} from '../nba.service';
+import {Division, divisions} from "../divisions.model";
+import {conferences} from "../conferences.model";
 
 @Component({
   selector: 'app-game-stats',
@@ -10,13 +11,33 @@ import {NbaService} from '../nba.service';
 })
 export class GameStatsComponent {
 
-  teams$: Observable<Team[]>;
   allTeams: Team[] = [];
+  filteredTeams: Team[] = [];
+  conferences = conferences;
+  divisions: Division[] = [];
 
   constructor(protected nbaService: NbaService) {
-    this.teams$ = nbaService.getAllTeams().pipe(
-      tap(data => this.allTeams = data)
-    );
+    this.nbaService.getAllTeams().subscribe({
+      next: data => {
+        this.allTeams = data
+        this.filteredTeams = data;
+      }
+    });
+  }
+
+  filterDivisions(conferenceCode: string) {
+    if (conferenceCode === 'default') {
+      this.divisions = [];
+      this.filteredTeams = this.allTeams;
+      return;
+    }
+
+    this.divisions = divisions.filter(division => division.conferenceCode === conferenceCode);
+    this.filteredTeams = this.allTeams.filter(team => team.conference === conferenceCode);
+  }
+
+  filterTeams(divisionCode: string) {
+    this.filteredTeams = this.allTeams.filter(team => team.division === divisionCode);
   }
 
   trackTeam(teamId: string): void {
