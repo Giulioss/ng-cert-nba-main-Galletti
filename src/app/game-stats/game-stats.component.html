@@ -1,21 +1,21 @@
-<div class="row">
-  <div class="col-sm-11">
-    <select #conferenceSelect (change)="filterDivisions(conferenceSelect.value)">
+<div class="row" *ngIf="teamForm">
+  <div class="col-sm-11" [formGroup]="teamForm">
+    <select formControlName="conferenceSelect">
       <option [value]="conference.code" *ngFor="let conference of conferences">
         {{conference.description}}
       </option>
     </select>
-    <select #divisionSelect (change)="filterTeams(divisionSelect.value)">
+    <select formControlName="divisionSelect" *ngIf="teamForm.get('conferenceSelect')?.value !== 'default'">
       <option [value]="division.code" *ngFor="let division of divisions">
         {{division.description}}
       </option>
     </select>
-    <select #teamSelect>
+    <select formControlName="teamSelect">
       <option [value]="team.id" *ngFor="let team of filteredTeams">
         {{team.full_name}}
       </option>
     </select>
-    <button class="primary" (click)="trackTeam(teamSelect.value)">Track team</button>
+    <button class="primary" (click)="trackTeam()">Track team</button>
   </div>
 
 </div>

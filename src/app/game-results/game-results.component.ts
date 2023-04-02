@@ -18,7 +18,6 @@ export class GameResultsComponent {
   constructor(private activatedRoute: ActivatedRoute, private nbaService: NbaService) {
     this.activatedRoute.paramMap.subscribe(paramMap => {
         this.team = this.nbaService.getTrackedTeams().find(team => team.abbreviation === paramMap.get("teamAbbr"));
-        debugger;
         const numberOfDays = paramMap.get('numberOfDays');
         if (numberOfDays) {
           this.numberOfDays = +numberOfDays;

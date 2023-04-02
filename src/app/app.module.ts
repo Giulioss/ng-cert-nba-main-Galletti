@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import { TeamStatsComponent } from './team-stats/team-stats.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { GameResultsComponent } from './game-results/game-results.component';
 import { GameStatsComponent } from './game-stats/game-stats.component';
 import { ModalComponent } from './modal/modal.component';
@@ -18,12 +18,13 @@ import { ModalComponent } from './modal/modal.component';
     GameStatsComponent,
     ModalComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
