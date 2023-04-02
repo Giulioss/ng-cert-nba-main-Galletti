@@ -1,4 +1,4 @@
-<div class="card" *ngIf="games$ | async as games">
+<div class="card" *ngIf="allGames">
   <div>
     <h3>{{team.full_name}} [{{team.abbreviation}}] <span (click)="showRemoveModal = true">&times;</span></h3>
     <h6>{{team.conference}}ern conference</h6>
@@ -8,7 +8,14 @@
     <div class="row">
       <div class="col-sm-6">
         <p>
-          Results of past 12 days:
+          Results of past
+          <select #statsDaysSelect (change)="statsDaysChange(statsDaysSelect.value)">
+            <option [value]="day" *ngFor="let day of statsDays">
+              {{day}}
+            </option>
+          </select>
+
+          days:
         </p>
         <p>
           <mark class="tag" *ngFor="let result of stats.lastGames" [class]="result">{{result}}</mark>
@@ -23,7 +30,7 @@
     </div>
   </div>
   <div>
-    <button class="tertiary" [routerLink]=" 'results/'+ team.abbreviation">See game results >></button>
+    <button class="tertiary" [routerLink]="['results/', team.abbreviation, statsDaysSelect.value]">See game results >></button>
   </div>
 
 </div>

@@ -4,7 +4,7 @@ import {GameResultsComponent} from './game-results/game-results.component';
 import {GameStatsComponent} from './game-stats/game-stats.component';
 
 const routes: Routes = [{
-  path: "results/:teamAbbr", component: GameResultsComponent
+  path: "results/:teamAbbr/:numberOfDays", component: GameResultsComponent
 }, {
   path: "**", component: GameStatsComponent
 }];
