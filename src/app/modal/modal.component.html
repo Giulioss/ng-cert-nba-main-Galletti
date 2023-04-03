@@ -1,4 +1,6 @@
-<ng-container *ngIf="showModal">
+<ng-container *ngIf="display$ | async as display">
+  <ng-container *ngIf="display.open && display.identifier === identifier">
+  <div class="backdrop" (click)="close(display.identifier)"></div>
   <div class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -14,6 +16,5 @@
 
     </div>
   </div>
+  </ng-container>
 </ng-container>
-
-

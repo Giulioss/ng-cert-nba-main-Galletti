@@ -1,6 +1,6 @@
 <div class="card" *ngIf="allGames">
   <div>
-    <h3>{{team.full_name}} [{{team.abbreviation}}] <span (click)="showRemoveModal = true">&times;</span></h3>
+    <h3>{{team.full_name}} [{{team.abbreviation}}] <span (click)="openConfirmationModal()">&times;</span></h3>
     <h6>{{team.conference}}ern conference</h6>
   </div>
   <hr/>
@@ -37,9 +37,9 @@
 
 <!-- I'm forced to use custom body and footer and not the default ones (<body> and <footer>)
   to avoid applying a default formatting CSS -->
-<app-modal [showModal]="showRemoveModal">
+<app-modal [identifier]="modalIdentifier">
   <ng-container body>
-    <p>Are you sure you want remove this team?</p>
+    <p>Are you sure you want remove {{team.full_name}}?</p>
   </ng-container>
 
   <ng-container footer>
