@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NbaService} from '../nba.service';
 import {Game, Stats, Team} from '../data.models';
 import {statsDays} from "../stats-days.model";
@@ -10,7 +10,7 @@ import {Subject, takeUntil} from "rxjs";
   templateUrl: './team-stats.component.html',
   styleUrls: ['./team-stats.component.css']
 })
-export class TeamStatsComponent implements OnInit {
+export class TeamStatsComponent implements OnInit, OnDestroy {
 
   @Input() team!: Team;
 
@@ -35,8 +35,14 @@ export class TeamStatsComponent implements OnInit {
     this.modalIdentifier = 'modal-' + this.team.abbreviation;
   }
 
+  ngOnDestroy() {
+    this.destroy.next(true);
+  }
+
   statsDaysChange() {
-    this.nbaService.getLastResults(this.team, this.selectedDays).subscribe((games) => {
+    this.nbaService.getLastResults(this.team, this.selectedDays).pipe(
+      takeUntil(this.destroy)
+    ).subscribe((games) => {
       this.stats = this.nbaService.getStatsFromGames(games, this.team);
     });
   }

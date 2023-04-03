@@ -1,34 +1,41 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Team} from '../data.models';
 import {NbaService} from '../nba.service';
 import {Division, divisions} from "../divisions.model";
 import {conferences} from "../conferences.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-game-stats',
   templateUrl: './game-stats.component.html',
   styleUrls: ['./game-stats.component.css']
 })
-export class GameStatsComponent {
+export class GameStatsComponent implements OnInit, OnDestroy {
 
   allTeams: Team[] = [];
   filteredTeams: Team[] = [];
   conferences = conferences;
   divisions: Division[] = [];
   teamForm!: FormGroup;
+  destroy = new Subject();
 
   constructor(protected nbaService: NbaService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder) {}
 
-    this.nbaService.getAllTeams().subscribe({
-      next: data => {
-        this.allTeams = data
-        this.filteredTeams = data;
+  ngOnInit() {
+    this.nbaService.getAllTeams().pipe(
+      takeUntil(this.destroy)
+    ).subscribe(data => {
+      this.allTeams = data
+      this.filteredTeams = data;
 
-        this.initForm();
-      }
+      this.initForm();
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy.next(true);
   }
 
   private initForm() {
