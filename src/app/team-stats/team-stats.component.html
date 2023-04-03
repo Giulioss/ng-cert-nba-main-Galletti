@@ -9,7 +9,7 @@
       <div class="col-sm-6">
         <p>
           Results of past
-          <select #statsDaysSelect (change)="statsDaysChange(statsDaysSelect.value)">
+          <select [(ngModel)]="selectedDays" (ngModelChange)="statsDaysChange()">
             <option [value]="day" *ngFor="let day of statsDays">
               {{day}}
             </option>
@@ -30,7 +30,7 @@
     </div>
   </div>
   <div>
-    <button class="tertiary" [routerLink]="['results/', team.abbreviation, statsDaysSelect.value]">See game results >></button>
+    <button class="tertiary" [routerLink]="['results/', team.abbreviation, selectedDays]">See game results >></button>
   </div>
 
 </div>
