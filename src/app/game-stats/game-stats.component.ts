@@ -41,7 +41,7 @@ export class GameStatsComponent {
     this.teamForm.get('conferenceSelect')?.valueChanges.subscribe(conferenceCode => {
       if (conferenceCode === 'default') {
         this.divisions = [];
-        this.filteredTeams = this.allTeams;
+        this.filteredTeams = [...this.allTeams];
         return;
       }
 
@@ -50,7 +50,7 @@ export class GameStatsComponent {
     });
 
     this.teamForm.get('divisionSelect')?.valueChanges.subscribe(divisionCode => {
-      this.filteredTeams = this.allTeams.filter(team => team.division === divisionCode);
+      this.filteredTeams = this.filteredTeams.filter(team => team.division === divisionCode);
     });
   }
 
