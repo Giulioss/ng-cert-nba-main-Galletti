@@ -27,8 +27,10 @@ export class GameStatsComponent implements OnInit, OnDestroy {
     this.nbaService.getAllTeams().pipe(
       takeUntil(this.destroy)
     ).subscribe(data => {
-      this.allTeams = data
-      this.filteredTeams = data;
+      this.allTeams = [...data]
+
+      const trackedTeams = this.nbaService.getTrackedTeams();
+      this.filteredTeams = data.filter(team => !trackedTeams.some(trackedTeam => trackedTeam.id === team.id));
 
       this.initForm();
     });
