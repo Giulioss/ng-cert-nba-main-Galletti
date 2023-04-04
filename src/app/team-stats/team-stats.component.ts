@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {NbaService} from '../nba.service';
 import {Game, Stats, Team} from '../data.models';
 import {statsDays} from "../stats-days.model";
@@ -13,6 +13,8 @@ import {Subject, takeUntil} from "rxjs";
 export class TeamStatsComponent implements OnInit, OnDestroy {
 
   @Input() team!: Team;
+
+  @Output() onTeamRemoved = new EventEmitter();
 
   allGames!: Game[];
   stats!: Stats;
@@ -54,6 +56,7 @@ export class TeamStatsComponent implements OnInit, OnDestroy {
   confirmTeamRemoval(team: Team) {
     this.closeModal();
     this.nbaService.removeTrackedTeam(team);
+    this.onTeamRemoved.emit();
   }
 
   openConfirmationModal() {

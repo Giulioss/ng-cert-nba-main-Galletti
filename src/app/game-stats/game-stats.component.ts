@@ -72,4 +72,11 @@ export class GameStatsComponent implements OnInit, OnDestroy {
       this.teamForm.get('teamSelect').setValue(this.filteredTeams[0]?.id);
     }
   }
+
+  addTeamRemoved(idTeam: number) {
+    const team = this.allTeams.find(team => team.id === idTeam);
+    if (team) {
+      this.filteredTeams.push(team);
+    }
+  }
 }
