@@ -17,7 +17,7 @@ export class TeamStatsComponent implements OnInit, OnDestroy {
   allGames!: Game[];
   stats!: Stats;
   statsDays = statsDays;
-  selectedDays: number = 3;
+  selectedDays: number = 6;
   modalIdentifier: string;
   destroy = new Subject();
 

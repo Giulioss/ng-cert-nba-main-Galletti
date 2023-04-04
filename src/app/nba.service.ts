@@ -38,7 +38,7 @@ export class NbaService {
 
   getLastResults(team: Team, numberOfDays = 12 ): Observable<Game[]> {
     return this.http.get<{meta: any, data: Game[]}>(`${this.API_URL}/games?page=0${this.getDaysQueryString(numberOfDays)}`,
-      {headers: this.headers, params: {per_page: 12, "team_ids[]": ""+team.id}}).pipe(
+      {headers: this.headers, params: {per_page: numberOfDays, "team_ids[]": ""+team.id}}).pipe(
         map(res => res.data)
     );
   }

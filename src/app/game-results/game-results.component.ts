@@ -12,7 +12,7 @@ import {Observable} from 'rxjs';
 export class GameResultsComponent {
 
   team?: Team;
-  numberOfDays = 12;
+  numberOfDays = 6;
   games$?: Observable<Game[]>;
 
   constructor(private activatedRoute: ActivatedRoute, private nbaService: NbaService) {

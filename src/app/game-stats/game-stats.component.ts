@@ -66,6 +66,8 @@ export class GameStatsComponent implements OnInit, OnDestroy {
     let team = this.allTeams.find(team => team.id == Number(teamId));
     if (team) {
       this.nbaService.addTrackedTeam(team);
+      this.filteredTeams = this.filteredTeams.filter(team => team.id !== Number(teamId));
+      this.teamForm.get('teamSelect').setValue(this.filteredTeams[0]?.id);
     }
   }
 }
