@@ -31,6 +31,7 @@ export class GameStatsComponent implements OnInit, OnDestroy {
 
       const trackedTeams = this.nbaService.getTrackedTeams();
       this.filteredTeams = data.filter(team => !trackedTeams.some(trackedTeam => trackedTeam.id === team.id));
+      this.orderTeamsByName();
 
       this.initForm();
     });
@@ -51,15 +52,18 @@ export class GameStatsComponent implements OnInit, OnDestroy {
       if (conferenceCode === 'default') {
         this.divisions = [];
         this.filteredTeams = [...this.allTeams];
+        this.orderTeamsByName();
         return;
       }
 
       this.divisions = divisions.filter(division => division.conferenceCode === conferenceCode);
       this.filteredTeams = this.allTeams.filter(team => team.conference === conferenceCode);
+      this.orderTeamsByName();
     });
 
     this.teamForm.get('divisionSelect')?.valueChanges.subscribe(divisionCode => {
       this.filteredTeams = this.filteredTeams.filter(team => team.division === divisionCode);
+      this.orderTeamsByName();
     });
   }
 
@@ -70,6 +74,7 @@ export class GameStatsComponent implements OnInit, OnDestroy {
       this.nbaService.addTrackedTeam(team);
       this.filteredTeams = this.filteredTeams.filter(team => team.id !== Number(teamId));
       this.teamForm.get('teamSelect').setValue(this.filteredTeams[0]?.id);
+      this.orderTeamsByName();
     }
   }
 
@@ -77,6 +82,11 @@ export class GameStatsComponent implements OnInit, OnDestroy {
     const team = this.allTeams.find(team => team.id === idTeam);
     if (team) {
       this.filteredTeams.push(team);
+      this.orderTeamsByName();
     }
+  }
+
+  private orderTeamsByName() {
+    this.filteredTeams = this.filteredTeams.sort((a, b) => a.full_name.localeCompare(b.full_name));
   }
 }
