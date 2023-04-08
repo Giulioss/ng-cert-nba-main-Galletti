@@ -21,7 +21,7 @@
 </div>
 <div class="row">
   <app-team-stats class="col-sm-4" *ngFor="let team of nbaService.getTrackedTeams()"
-                  [team]="team" (onTeamRemoved)="addTeamRemoved(team.id)">
+                  [team]="team" (onTeamRemoved)="addRemovedTeam(team.id)">
 
   </app-team-stats>
 </div>
