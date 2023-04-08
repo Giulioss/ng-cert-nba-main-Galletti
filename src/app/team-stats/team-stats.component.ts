@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {NbaService} from '../nba.service';
-import {Game, Stats, Team} from '../data.models';
+import {Stats, Team} from '../data.models';
 import {statsDays} from "../stats-days.model";
 import {ModalService} from "../modal.service";
 import {Subject, takeUntil} from "rxjs";
@@ -16,7 +16,6 @@ export class TeamStatsComponent implements OnInit, OnDestroy {
 
   @Output() onTeamRemoved = new EventEmitter();
 
-  allGames!: Game[];
   stats!: Stats;
   statsDays = statsDays;
   selectedDays: number = 6;
@@ -27,13 +26,7 @@ export class TeamStatsComponent implements OnInit, OnDestroy {
               private modalService: ModalService) { }
 
   ngOnInit(): void {
-    this.nbaService.getLastResults(this.team, this.selectedDays).pipe(
-      takeUntil(this.destroy)
-    ).subscribe((games) => {
-      this.allGames = games;
-      this.stats = this.nbaService.getStatsFromGames(games, this.team);
-    });
-
+    this.statsDaysChange();
     this.modalIdentifier = 'modal-' + this.team.abbreviation;
   }
 
