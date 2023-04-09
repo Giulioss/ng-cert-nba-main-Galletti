@@ -1,3 +1,5 @@
+
+/* List of all divisions */
 export const divisions: Division[] = [
   {code: 'Southeast', description: 'Southeast Division', conferenceCode: 'East'},
   {code: 'Atlantic', description: 'Atlantic Division', conferenceCode: 'East'},

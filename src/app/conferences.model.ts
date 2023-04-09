@@ -1,3 +1,5 @@
+
+/* List of all conferences */
 export const conferences: Conference[] = [
   {code: 'default', description: 'Select a Conference'},
   {code: 'East', description: 'Eastern Conference'},

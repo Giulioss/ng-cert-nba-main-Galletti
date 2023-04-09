@@ -1,20 +1,21 @@
+<!-- This modal is generic, because I use Content projection to display the text -->
 <ng-container *ngIf="display$ | async as display">
   <ng-container *ngIf="display.open && display.identifier === identifier">
-  <div class="backdrop" (click)="close(display.identifier)"></div>
-  <div class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="backdrop" (click)="close(display.identifier)"></div>
+    <div class="modal fade" role="dialog">
+      <div class="modal-dialog">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-body">
-          <ng-content select="[body]"></ng-content>
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-body">
+            <ng-content select="[body]"></ng-content>
+          </div>
+          <div class="modal-footer">
+            <ng-content select="[footer]"></ng-content>
+          </div>
         </div>
-        <div class="modal-footer">
-          <ng-content select="[footer]"></ng-content>
-        </div>
+
       </div>
-
     </div>
-  </div>
   </ng-container>
 </ng-container>

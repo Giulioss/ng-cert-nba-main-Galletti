@@ -18,6 +18,7 @@ export class GameResultsComponent {
   protected readonly statsDays = statsDays;
 
   constructor(private activatedRoute: ActivatedRoute, private nbaService: NbaService) {
+    /* Find team and number of days from path */
     this.activatedRoute.paramMap.subscribe(paramMap => {
         this.team = this.nbaService.getTrackedTeams().find(team => team.abbreviation === paramMap.get("teamAbbr"));
         const numberOfDays = paramMap.get('numberOfDays');
@@ -31,6 +32,7 @@ export class GameResultsComponent {
     });
   }
 
+  /* Get last results of selected team */
   protected getLastResults() {
     this.games$ = this.nbaService.getLastResults(this.team, this.numberOfDays);
   }

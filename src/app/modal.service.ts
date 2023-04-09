@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 
+/* This service control all the modals in my application, using an identifier and a boolean value to open and close the modals */
 @Injectable({
   providedIn: 'root'
 })

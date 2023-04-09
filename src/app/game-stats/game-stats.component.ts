@@ -29,7 +29,7 @@ export class GameStatsComponent implements OnInit, OnDestroy {
     ).subscribe(data => {
       /* Get all teams and order by full_name*/
       this.allTeams = [...data];
-      this.allTeams = this.allTeams.sort((a, b) => a.full_name.localeCompare(b.full_name));
+      this.allTeams.sort((a, b) => a.full_name.localeCompare(b.full_name));
 
       /* Filter teams that i'm already tracking*/
       const trackedTeams = this.nbaService.getTrackedTeams();
@@ -75,6 +75,7 @@ export class GameStatsComponent implements OnInit, OnDestroy {
     });
   }
 
+  /* Track team and remove that from selectable teams */
   trackTeam(): void {
     const teamId = this.teamForm.get('teamSelect')?.value;
     let team = this.allTeams.find(team => team.id == Number(teamId));
@@ -104,7 +105,7 @@ export class GameStatsComponent implements OnInit, OnDestroy {
 
       /* If I didn't select the Division or the Conference, I add the team to the list and thant order by full_name */
       this.filteredTeams.push(team);
-      this.filteredTeams = this.filteredTeams.sort((a, b) => a.full_name.localeCompare(b.full_name));
+      this.filteredTeams.sort((a, b) => a.full_name.localeCompare(b.full_name));
     }
   }
 
