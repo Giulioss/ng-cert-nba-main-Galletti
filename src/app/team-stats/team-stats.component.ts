@@ -28,9 +28,10 @@ export class TeamStatsComponent implements OnInit, OnDestroy {
               private modalService: ModalService) { }
 
   ngOnInit(): void {
-    this.statsDaysChange();
     this.modalIdentifier = 'modal-' + this.team.abbreviation;
-    this.statsService.statsDays.subscribe(value => {
+    this.statsService.statsDays.pipe(
+      takeUntil(this.destroy)
+    ).subscribe(value => {
       this.selectedDays = value;
       this.statsDaysChange();
     });

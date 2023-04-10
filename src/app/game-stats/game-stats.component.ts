@@ -45,7 +45,9 @@ export class GameStatsComponent implements OnInit, OnDestroy {
       this.initForm();
     });
 
-    this.statsService.statsDays.subscribe(value => this.allTeamsSelectedDays = value);
+    this.statsService.statsDays.pipe(
+      takeUntil(this.destroy)
+    ).subscribe(value => this.allTeamsSelectedDays = value);
   }
 
   ngOnDestroy() {
