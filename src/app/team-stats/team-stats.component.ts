@@ -29,7 +29,10 @@ export class TeamStatsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.statsDaysChange();
     this.modalIdentifier = 'modal-' + this.team.abbreviation;
-    this.selectedDays$.subscribe(value => this.selectedDays = value);
+    this.selectedDays$.subscribe(value => {
+      this.selectedDays = value;
+      this.statsDaysChange();
+    });
   }
 
   ngOnDestroy() {
