@@ -67,11 +67,15 @@ export class GameStatsComponent implements OnInit, OnDestroy {
 
       this.divisions = divisions.filter(division => division.conferenceCode === conferenceCode);
       this.filterTeamsByConferenceCode(trackedTeams, conferenceCode);
+      this.teamForm.get('teamSelect').setValue(this.filteredTeams[0]?.id);
     });
 
     this.teamForm.get('divisionSelect')?.valueChanges.subscribe(divisionCode => {
-      const trackedTeams = this.nbaService.getTrackedTeams();
-      this.filterTeamsByDivisionCode(trackedTeams, divisionCode);
+      if (divisionCode) {
+        const trackedTeams = this.nbaService.getTrackedTeams();
+        this.filterTeamsByDivisionCode(trackedTeams, divisionCode);
+        this.teamForm.get('teamSelect').setValue(this.filteredTeams[0]?.id);
+      }
     });
   }
 
