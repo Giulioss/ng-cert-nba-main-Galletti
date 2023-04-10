@@ -19,9 +19,25 @@
   </div>
 
 </div>
-<div class="row">
-  <app-team-stats class="col-sm-4" *ngFor="let team of nbaService.getTrackedTeams()"
-                  [team]="team" (onTeamRemoved)="addRemovedTeam(team.id)">
 
-  </app-team-stats>
-</div>
+<ng-container *ngIf="nbaService.getTrackedTeams()?.length > 0">
+
+  <div class="row">
+    <div class="col-sm-6">
+      Results of past
+      <select [(ngModel)]="allTeamsSelectedDays" (ngModelChange)="allTeamsSelectedDays$.next(allTeamsSelectedDays)">
+        <option [value]="day" *ngFor="let day of statsDays">
+          {{day}}
+        </option>
+      </select>
+      days for all teams
+    </div>
+  </div>
+
+  <div class="row">
+    <app-team-stats class="col-sm-4" *ngFor="let team of nbaService.getTrackedTeams()"
+                    [team]="team" (onTeamRemoved)="addRemovedTeam(team.id)" [selectedDays$]="allTeamsSelectedDays$">
+
+    </app-team-stats>
+  </div>
+</ng-container>

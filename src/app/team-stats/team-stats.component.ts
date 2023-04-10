@@ -3,7 +3,7 @@ import {NbaService} from '../nba.service';
 import {Stats, Team} from '../data.models';
 import {statsDays} from "../stats-days.model";
 import {ModalService} from "../modal.service";
-import {Subject, takeUntil} from "rxjs";
+import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-team-stats',
@@ -13,6 +13,7 @@ import {Subject, takeUntil} from "rxjs";
 export class TeamStatsComponent implements OnInit, OnDestroy {
 
   @Input() team!: Team;
+  @Input() selectedDays$: BehaviorSubject<number>;
 
   @Output() onTeamRemoved = new EventEmitter();
 
@@ -28,6 +29,7 @@ export class TeamStatsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.statsDaysChange();
     this.modalIdentifier = 'modal-' + this.team.abbreviation;
+    this.selectedDays$.subscribe(value => this.selectedDays = value);
   }
 
   ngOnDestroy() {

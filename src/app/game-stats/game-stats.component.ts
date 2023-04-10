@@ -4,7 +4,8 @@ import {NbaService} from '../nba.service';
 import {Division, divisions} from "../divisions.model";
 import {conferences} from "../conferences.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Subject, takeUntil} from "rxjs";
+import {BehaviorSubject, Subject, takeUntil} from "rxjs";
+import {statsDays} from "../stats-days.model";
 
 @Component({
   selector: 'app-game-stats',
@@ -18,6 +19,11 @@ export class GameStatsComponent implements OnInit, OnDestroy {
   conferences = conferences;
   divisions: Division[] = [];
   teamForm!: FormGroup;
+  allTeamsSelectedDays = 6;
+
+  protected readonly statsDays = statsDays;
+
+  allTeamsSelectedDays$ = new BehaviorSubject<number>(this.allTeamsSelectedDays);
   destroy = new Subject();
 
   constructor(protected nbaService: NbaService,
