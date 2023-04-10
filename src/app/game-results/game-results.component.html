@@ -3,13 +3,7 @@
   <h6>{{team.conference}}ern conference</h6>
   <hr/>
   <p>
-    Scores of past
-    <select [(ngModel)]="numberOfDays" (ngModelChange)="getLastResults()">
-      <option [value]="day" *ngFor="let day of statsDays">
-        {{day}}
-      </option>
-    </select>
-    days:
+    Scores of past {{numberOfDays}} days:
   </p>
   <p *ngFor="let game of games$ | async">
     <strong>{{game.home_team.abbreviation}}</strong>  {{game.home_team_score}} - {{game.visitor_team_score}} <strong>{{game.visitor_team.abbreviation}}</strong>
