@@ -4,8 +4,9 @@ import {NbaService} from '../nba.service';
 import {Division, divisions} from "../divisions.model";
 import {conferences} from "../conferences.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {BehaviorSubject, Subject, takeUntil} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {statsDays} from "../stats-days.model";
+import {StatsService} from "../stats.service";
 
 @Component({
   selector: 'app-game-stats',
@@ -23,10 +24,10 @@ export class GameStatsComponent implements OnInit, OnDestroy {
 
   protected readonly statsDays = statsDays;
 
-  allTeamsSelectedDays$ = new BehaviorSubject<number>(this.allTeamsSelectedDays);
   destroy = new Subject();
 
   constructor(protected nbaService: NbaService,
+              private statsService: StatsService,
               private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -83,6 +84,10 @@ export class GameStatsComponent implements OnInit, OnDestroy {
         this.teamForm.get('teamSelect').setValue(this.filteredTeams[0]?.id);
       }
     });
+  }
+
+  changeStatsDays() {
+    this.statsService.changeValue(this.allTeamsSelectedDays);
   }
 
   /* Track team and remove that from selectable teams */
