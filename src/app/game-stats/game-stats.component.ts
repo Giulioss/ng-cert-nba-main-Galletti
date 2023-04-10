@@ -20,7 +20,7 @@ export class GameStatsComponent implements OnInit, OnDestroy {
   conferences = conferences;
   divisions: Division[] = [];
   teamForm!: FormGroup;
-  allTeamsSelectedDays = 6;
+  allTeamsSelectedDays: number;
 
   protected readonly statsDays = statsDays;
 
@@ -44,6 +44,8 @@ export class GameStatsComponent implements OnInit, OnDestroy {
 
       this.initForm();
     });
+
+    this.statsService.statsDays.subscribe(value => this.allTeamsSelectedDays = value);
   }
 
   ngOnDestroy() {
